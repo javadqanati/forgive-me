@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>یه سوال مهم 🌸</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F9DBBD;
+      --blush: #FFA5AB;
+      --rose:  #DA627D;
+      --wine:  #A53860;
+      --dark:  #450920;
+    }
+
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--cream);
+      overflow: hidden;
+      cursor: default;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: -50%;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 30%, rgba(255,165,171,0.45) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 80% 70%, rgba(218,98,125,0.30) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 55% 20%, rgba(249,219,189,0.6) 0%, transparent 60%);
+      animation: blobShift 10s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes blobShift {
+      0%   { transform: scale(1) rotate(0deg); }
+      100% { transform: scale(1.08) rotate(4deg); }
+    }
+
+    .petal {
+      position: fixed;
+      opacity: 0;
+      animation: fall linear infinite;
+      pointer-events: none;
+      z-index: 0;
+      user-select: none;
+    }
+
+    @keyframes fall {
+      0%   { transform: translateY(-40px) rotate(0deg); opacity: 0.7; }
+      100% { transform: translateY(110vh)  rotate(360deg); opacity: 0; }
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 3.5rem 3rem 3rem;
+      background: rgba(255,255,255,0.45);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1.5px solid rgba(255,255,255,0.7);
+      border-radius: 2.5rem;
+      box-shadow: 0 8px 32px rgba(165,56,96,0.12), 0 2px 8px rgba(165,56,96,0.08);
+      max-width: 480px;
+      width: 92vw;
+      animation: cardIn 1s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(30px) scale(.96); }
+      to   { opacity: 1; transform: translateY(0)    scale(1);   }
+    }
+
+    .heart-deco {
+      font-size: 2rem;
+      margin-bottom: 1.2rem;
+      display: block;
+      animation: heartbeat 1.6s ease-in-out infinite;
+      filter: drop-shadow(0 0 8px rgba(218,98,125,0.5));
+    }
+
+    @keyframes heartbeat {
+      0%,100% { transform: scale(1);    }
+      30%     { transform: scale(1.18); }
+      60%     { transform: scale(1.08); }
+    }
+
+    .question {
+      font-size: clamp(1.7rem, 5vw, 2.4rem);
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1.5;
+      margin-bottom: 2.4rem;
+      text-shadow: 0 2px 8px rgba(69,9,32,0.08);
+    }
+
+    .buttons {
+      display: flex;
+      gap: 1.2rem;
+      justify-content: center;
+      align-items: center;
+      min-height: 52px;
+      position: relative;
+    }
+
+    .btn {
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 0.75rem 2.2rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      user-select: none;
+    }
+
+    .btn-yes {
+      background: linear-gradient(135deg, var(--rose), var(--wine));
+      color: #fff;
+      box-shadow: 0 4px 18px rgba(165,56,96,0.35);
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+
+    .btn-yes:hover  { transform: scale(1.07); box-shadow: 0 6px 24px rgba(165,56,96,0.5); }
+    .btn-yes:active { transform: scale(0.97); }
+
+    /* No button — stays inside .buttons row, position absolute within card */
+    .btn-no {
+      background: rgba(255,165,171,0.35);
+      color: var(--wine);
+      box-shadow: 0 2px 10px rgba(218,98,125,0.15);
+    }
+
+    .btn-no.fleeing {
+      position: absolute;
+      z-index: 10;
+      transition: none;
+    }
+
+    /* fireworks overlay */
+    #fireworks-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background: rgba(69,9,32,0.88);
+      backdrop-filter: blur(6px);
+    }
+
+    #fireworks-overlay.show { display: flex; animation: fadeIn 0.5s ease both; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .success-text {
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      font-weight: 700;
+      color: var(--cream);
+      text-align: center;
+      margin-top: 1.5rem;
+      text-shadow: 0 0 30px rgba(255,165,171,0.8);
+      animation: popIn 0.6s cubic-bezier(.22,1,.36,1) 0.3s both;
+      z-index: 101;
+      position: relative;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+
+    canvas#fw {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 100;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card" id="mainCard">
+  <span class="heart-deco">🌸</span>
+  <p class="question">?آیا من رو می‌بخشی</p>
+  <div class="buttons" id="btnRow">
+    <button class="btn btn-yes" id="btnYes">بله</button>
+    <button class="btn btn-no"  id="btnNo" >خیر</button>
+  </div>
+</div>
+
+<canvas id="fw"></canvas>
+<div id="fireworks-overlay">
+  <p class="success-text">آخجونننننن😍</p>
+</div>
+
+<script>
+/* ── Floating petals ── */
+const petalSymbols = ['🌸','🌺','✿','❀','🌷'];
+for (let i = 0; i < 18; i++) {
+  const el = document.createElement('span');
+  el.className = 'petal';
+  el.textContent = petalSymbols[Math.floor(Math.random() * petalSymbols.length)];
+  el.style.left = Math.random() * 100 + 'vw';
+  el.style.fontSize = (0.8 + Math.random() * 1.2) + 'rem';
+  el.style.animationDuration = (6 + Math.random() * 10) + 's';
+  el.style.animationDelay    = (Math.random() * 12) + 's';
+  document.body.appendChild(el);
+}
+
+/* ── "No" button escape logic — stays inside the card ── */
+const btnNo  = document.getElementById('btnNo');
+const card   = document.getElementById('mainCard');
+const FLEE_RADIUS = 120;
+let isFleeing = false;
+
+function clamp(val, min, max) { return Math.min(max, Math.max(min, val)); }
+
+function tryFlee(cursorX, cursorY) {
+  const r  = btnNo.getBoundingClientRect();
+  const bx = r.left + r.width  / 2;
+  const by = r.top  + r.height / 2;
+  const dx = cursorX - bx;
+  const dy = cursorY - by;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+
+  if (dist < FLEE_RADIUS) {
+    if (!isFleeing) {
+      isFleeing = true;
+      // Switch to absolute inside the card, preserving visual position
+      const cardRect = card.getBoundingClientRect();
+      btnNo.classList.add('fleeing');
+      // position relative to card
+      btnNo.style.left = (r.left - cardRect.left) + 'px';
+      btnNo.style.top  = (r.top  - cardRect.top)  + 'px';
+    }
+
+    const angle = Math.atan2(dy, dx);
+    const push  = (FLEE_RADIUS - dist) * 1.5;
+
+    const cardRect = card.getBoundingClientRect();
+    const PADDING  = 12; // px inside card edges
+
+    const newLeft = parseFloat(btnNo.style.left) - Math.cos(angle) * push;
+    const newTop  = parseFloat(btnNo.style.top)  - Math.sin(angle) * push;
+
+    const minLeft = PADDING;
+    const minTop  = PADDING;
+    const maxLeft = cardRect.width  - r.width  - PADDING;
+    const maxTop  = cardRect.height - r.height - PADDING;
+
+    btnNo.style.left = clamp(newLeft, minLeft, maxLeft) + 'px';
+    btnNo.style.top  = clamp(newTop,  minTop,  maxTop)  + 'px';
+  }
+}
+
+document.addEventListener('mousemove', e => tryFlee(e.clientX, e.clientY));
+document.addEventListener('touchmove', e => {
+  tryFlee(e.touches[0].clientX, e.touches[0].clientY);
+}, { passive: true });
+
+/* ── Yes → Fireworks ── */
+document.getElementById('btnYes').addEventListener('click', () => {
+  document.getElementById('fireworks-overlay').classList.add('show');
+  launchFireworks();
+});
+
+/* ── Fireworks ── */
+function launchFireworks() {
+  const canvas = document.getElementById('fw');
+  const ctx    = canvas.getContext('2d');
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const colors = ['#F9DBBD','#FFA5AB','#DA627D','#A53860','#fff','#ffe4e8','#ffb3ba'];
+  const particles = [];
+
+  function Particle(x, y, color) {
+    this.x = x; this.y = y;
+    this.vx = (Math.random() - 0.5) * 10;
+    this.vy = (Math.random() - 0.5) * 10 - 3;
+    this.alpha  = 1;
+    this.color  = color;
+    this.radius = 2 + Math.random() * 3;
+    this.decay  = 0.013 + Math.random() * 0.01;
+    this.gravity = 0.12;
+  }
+
+  function burst(x, y) {
+    const c = colors[Math.floor(Math.random() * colors.length)];
+    for (let i = 0; i < 80; i++) particles.push(new Particle(x, y, c));
+  }
+
+  for (let i = 0; i < 7; i++) {
+    setTimeout(() => burst(
+      Math.random() * canvas.width,
+      Math.random() * canvas.height * 0.7
+    ), i * 220);
+  }
+
+  const iv = setInterval(() => {
+    burst(Math.random() * canvas.width, Math.random() * canvas.height * 0.65);
+  }, 600);
+  setTimeout(() => clearInterval(iv), 6000);
+
+  (function loop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx; p.y += p.vy;
+      p.vy += p.gravity; p.vx *= 0.98;
+      p.alpha -= p.decay;
+      if (p.alpha <= 0) { particles.splice(i, 1); continue; }
+      ctx.save();
+      ctx.globalAlpha = p.alpha;
+      ctx.fillStyle   = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+    requestAnimationFrame(loop);
+  })();
+}
+</script>
+</body>
+</html>
